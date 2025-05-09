@@ -1,15 +1,21 @@
-// Uncomment the code below and write your tests
-// import { throwError, throwCustomError, resolveValue, MyAwesomeError, rejectCustomError } from './index';
+import {
+  throwError,
+  // throwCustomError,
+  resolveValue,
+  // MyAwesomeError,
+  // rejectCustomError,
+} from './index';
 
 describe('resolveValue', () => {
   test('should resolve provided value', async () => {
-    // Write your test here
+    await expect(resolveValue(5)).resolves.toBe(5);
   });
 });
 
 describe('throwError', () => {
   test('should throw error with provided message', () => {
-    // Write your test here
+    expect(() => throwError('fuck')).toThrow('fuck');
+    expect(() => throwError()).toThrow('Oops!');
   });
 
   test('should throw error with default message if message is not provided', () => {
