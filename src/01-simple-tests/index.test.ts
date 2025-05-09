@@ -12,26 +12,62 @@ describe('simpleCalculator tests', () => {
   });
 
   test('should subtract two numbers', () => {
-    // Write your test here
+    expect(
+      simpleCalculator({
+        a: 13,
+        b: 3,
+        action: Action.Subtract,
+      }),
+    ).toBe(10);
   });
 
   test('should multiply two numbers', () => {
-    // Write your test here
+    expect(
+      simpleCalculator({
+        a: 9,
+        b: 3,
+        action: Action.Multiply,
+      }),
+    ).toBe(27);
   });
 
   test('should divide two numbers', () => {
-    // Write your test here
+    expect(
+      simpleCalculator({
+        a: 9,
+        b: 3,
+        action: Action.Divide,
+      }),
+    ).toBe(3);
   });
 
   test('should exponentiate two numbers', () => {
-    // Write your test here
+    expect(
+      simpleCalculator({
+        a: 3,
+        b: 3,
+        action: Action.Exponentiate,
+      }),
+    ).toBe(27);
   });
 
   test('should return null for invalid action', () => {
-    // Write your test here
+    expect(
+      simpleCalculator({
+        a: 3,
+        b: 3,
+        action: 'invalid action',
+      }),
+    ).toBe(null);
   });
 
   test('should return null for invalid arguments', () => {
-    // Write your test here
+    expect(
+      simpleCalculator({
+        a: Symbol,
+        b: BigInt,
+        action: Action.Add,
+      }),
+    ).toBe(null);
   });
 });
