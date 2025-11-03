@@ -49,7 +49,27 @@ describe('BankAccount', () => {
   });
 
   test('should set new balance if fetchBalance returned number', async () => {
-    // Write your tests here
+    const ATTEMPTS = 10;
+    const bankAccount = getBankAccount(500);
+    const initialBalabce = bankAccount.getBalance();
+    let synchronizationHappened = false;
+
+    for (let i = 0; i < ATTEMPTS; i++) {
+      try {
+        await bankAccount.synchronizeBalance();
+        const newBalance = bankAccount.getBalance();
+
+        expect(newBalance).not.toBe(initialBalabce);
+        expect(newBalance).toBeGreaterThan(0);
+        expect(newBalance).toBeLessThan(100);
+        synchronizationHappened = true;
+        break;
+      } catch (err) {
+        continue;
+      }
+    }
+
+    expect(synchronizationHappened).toBe(true);
   });
 
   test('should throw SynchronizationFailedError if fetchBalance returned null', async () => {
