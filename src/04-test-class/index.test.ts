@@ -25,15 +25,17 @@ describe('BankAccount', () => {
   });
 
   test('should deposit money', () => {
-    // Write your test here
+    expect(getBankAccount(100).deposit(400).getBalance()).toBe(500);
   });
 
   test('should withdraw money', () => {
-    // Write your test here
+    expect(getBankAccount(300).withdraw(100).getBalance()).toBe(200);
   });
 
   test('should transfer money', () => {
-    // Write your test here
+    expect(
+      getBankAccount(500).transfer(499, getBankAccount(200)).getBalance(),
+    ).toBe(1);
   });
 
   test('fetchBalance should return number in case if request did not failed', async () => {
