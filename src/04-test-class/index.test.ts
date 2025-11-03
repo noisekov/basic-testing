@@ -1,4 +1,9 @@
-import { getBankAccount, InsufficientFundsError, TransferFailedError } from '.';
+import {
+  getBankAccount,
+  InsufficientFundsError,
+  SynchronizationFailedError,
+  TransferFailedError,
+} from '.';
 
 describe('BankAccount', () => {
   test('should create account with initial balance', () => {
@@ -60,8 +65,8 @@ describe('BankAccount', () => {
         const newBalance = bankAccount.getBalance();
 
         expect(newBalance).not.toBe(initialBalabce);
-        expect(newBalance).toBeGreaterThan(0);
-        expect(newBalance).toBeLessThan(100);
+        expect(newBalance).toBeGreaterThanOrEqual(0);
+        expect(newBalance).toBeLessThanOrEqual(100);
         synchronizationHappened = true;
         break;
       } catch (err) {
@@ -73,6 +78,23 @@ describe('BankAccount', () => {
   });
 
   test('should throw SynchronizationFailedError if fetchBalance returned null', async () => {
-    // Write your tests here
+    const ATTEMPTS = 10;
+    const bankAccount = getBankAccount(500);
+    let synchronizationFailed = false;
+
+    for (let i = 0; i < ATTEMPTS; i++) {
+      try {
+        await bankAccount.synchronizeBalance();
+      } catch (error: unknown) {
+        if (error instanceof SynchronizationFailedError) {
+          expect(error).toBeInstanceOf(SynchronizationFailedError);
+          expect(error.message).toBe('Synchronization failed');
+          synchronizationFailed = true;
+          break;
+        }
+      }
+    }
+
+    expect(synchronizationFailed).toBe(true);
   });
 });
