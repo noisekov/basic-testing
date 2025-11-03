@@ -12,7 +12,9 @@ describe('BankAccount', () => {
   });
 
   test('should throw error when transferring more than balance', () => {
-    // Write your test here
+    expect(() =>
+      getBankAccount(100).transfer(400, getBankAccount(100)),
+    ).toThrow(new InsufficientFundsError(100));
   });
 
   test('should throw error when transferring to the same account', () => {
